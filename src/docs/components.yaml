@@ -1,0 +1,46 @@
+components:
+  schemas:  # collection of data models (schemas) your api uses
+   User:     #Defining a schema named
+    type: object  # describes the JSON object
+    properties:   # the list of key value pairs 
+    _id:
+        type: string
+        description: The auto-generated id of the user
+        example: '60d0fe4f5311236168a109ca'
+    name:
+        type : string
+        example: 'john doe'
+    email:
+         type: string
+         format: email
+         example: 'johndoes@example.com'
+    username:
+            type: string
+            example: 'john_doe'
+    bio:
+          type: string
+          example: 'Backend developer building cool stuff.'
+    imageUrl:
+          type: string
+          format: uri
+          example: 'https://example.com/image.png'
+    createdAt:
+          type: string
+          format: date-time
+    updatedAt:
+          type: string
+          format: date-time
+
+    Error: # define another reusable schema named "ERROR"
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error.
+
+  securitySchemes: #  A collection authenticated methods your api supports
+    bearerAuth:  # define security named as bearer auth
+      type: http   # The type of security (e.g., http, apiKey).
+      scheme: bearer  # The specific HTTP scheme. "Bearer" is standard for JWTs.
+      bearerFormat: JWT # A hint about the format of the token.
+      

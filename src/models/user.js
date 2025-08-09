@@ -33,8 +33,39 @@ const UserSchema= new mongoose.Schema({
                 throw new Error('Password must strong')
             }
         }
+    },
+    username:{
+        type: String,
+        unique: true,
+        trim: true,
+        lowercase: true,
+        sparse: true
+    },
+    bio:{
+        type:String,
+        maxlength: 250,
+        default: 'Welcome tp my page'
+    },
+    imageUrl:{
+        type: String,
+        default: ""
+    },
+    links:[
+      {
+        title: {type: String, required: true},
+        url: {type: String, required: true}
+      }
+    ],
+    role:{
+        type: String,
+        enum:['user', 'admin'],
+        default: "user"
+    },
+    isActive:{
+        type: Boolean,
+        default: true
     }
-})
+}, {timestamps: true})
 
 UserSchema.pre('save', async function(next){
       if(!this.isModified('password')){
