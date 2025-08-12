@@ -104,3 +104,10 @@ Alerting: Get notified on errors/downtime via Slack, PagerDuty.
 
 Regular updates: Keep dependencies patched for security.
 
+
+# For a one-to-many relationship where the "many" (links) are intrinsically owned by and almost always accessed with the "one" (user), embedding is the industry-standard, high-performance pattern. Linktree absolutely uses this pattern or an equivalent in their database design. Performance is king for their use case.
+
+# link.remove is depricated in mongoose 6 and 7 
+# instead  We use the .pull() method on the user's links array // .pull() will search the array and remove the subdocument with the matching _id.
+
+

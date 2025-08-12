@@ -5,6 +5,36 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 dotenv.config()
 
+const LinkSchema= new mongoose.Schema({
+    title:{
+        type : String,
+        required:[true,'Title must be required'],
+        trim: true,
+        maxlength:[100, 'Title cannot not be more than 100 characters']
+    },
+    url:{
+         type : String,
+         required: [true, 'Url must be required'],
+         validate:{
+            validator: function(value){
+                return validator.isURL(value,{
+                   protocols:['http', 'https'],
+                   require_protocol:true
+                })
+            },
+            message: val=>`${val.value} is not a valid Url`
+         }
+    },
+    isActive:{
+        type : Boolean,
+        default: true
+    },
+    clicks:{
+        type:Number,
+        default:0
+    }
+})
+
 const UserSchema= new mongoose.Schema({
     name: {
         type: String,
@@ -50,12 +80,6 @@ const UserSchema= new mongoose.Schema({
         type: String,
         default: ""
     },
-    links:[
-      {
-        title: {type: String, required: true},
-        url: {type: String, required: true}
-      }
-    ],
     role:{
         type: String,
         enum:['user', 'admin'],
@@ -64,7 +88,8 @@ const UserSchema= new mongoose.Schema({
     isActive:{
         type: Boolean,
         default: true
-    }
+    },
+    links: [LinkSchema]
 }, {timestamps: true})
 
 UserSchema.pre('save', async function(next){

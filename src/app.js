@@ -5,6 +5,7 @@ import errorHandler from './middleware/errorHandler.js'
 import profileRouter from './routes/profileRoutes.js'
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from '../swaggerConfig.js'
+import linkRouter from './routes/linkRoutes.js'
 
 
 const app= express()
@@ -16,6 +17,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/profile', profileRouter)
+app.use('/api/v1/links', linkRouter)
+
 
 app.use(errorHandler)
 export default app

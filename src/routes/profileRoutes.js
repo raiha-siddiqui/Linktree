@@ -1,4 +1,4 @@
-import { protect } from "../middleware/authmiddleware.js"
+import { protect } from "../middleware/authMiddleware.js"
 import { getMyProfile, updateMyProfile } from "../controllers/profileController.js"
 import express from 'express'
 import {body} from 'express-validator'

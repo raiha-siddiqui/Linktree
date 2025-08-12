@@ -1,0 +1,116 @@
+# docs/links.yaml
+
+paths:
+  /links: 
+    post:
+      summary: Create a new link
+      tags: [Links]
+      description: "Adds a new link to the authenticated user's profile"
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Check out my github page"
+                url:
+                  type: string
+                  format: uri
+                  example: "https://github.com/my-username"
+      responses:
+        '201':
+          description: "Link created successfully. Returns the new link object."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Link"
+        '400':
+          description: "Bad request. Invalid or missing data."
+        '401':
+          description: Unauthorized. Invalid or missing token.
+          
+    get:
+      summary: Get all links of authenticated user
+      tags: [Links]
+      description: "Retrieves a list of all links belonging to the authenticated user."
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Success. Returns an array of the user's links.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Link'
+        '401':
+          description: Unauthorized. Invalid or missing token.
+
+  /links/{linkId}:
+    put:
+      summary: "Update an existing link"
+      tags: [Links]
+      description: Updates the title, URL, or status of a specific link.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: linkId
+          in: path
+          required: true
+          description: The ID of the link to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                url:
+                  type: string
+                  format: uri
+                isActive:
+                  type: boolean
+      responses:
+        '200':
+          description: Link updated successfully. Returns the updated link object.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Link"
+        '400':
+          description: "Bad request or invalid data"
+        '401':
+          description: "Unauthorized"
+        '404':
+          description: "Link not found"
+
+    delete: 
+      summary: "Delete a link"
+      tags: [Links]
+      description: "Permanently deletes a specific link from the user profile."
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: linkId
+          in: path
+          required: true
+          description: "The ID of the link to delete."
+          schema:
+            type: string
+      responses:
+        '204': 
+          description: Link deleted successfully. No content is returned.
+        '401':
+          description: "Unauthorized"
+        '404':
+          description: "Link not found"

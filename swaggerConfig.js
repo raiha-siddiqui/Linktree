@@ -29,7 +29,7 @@ const options = {
       },
     ],
   },
-  apis: ["./src/docs/*.yaml", '/docs/components.yaml'],
+  apis: ["./src/docs/*.yaml"],
 };
 // This function performs the "Build Once" step:
 // 1. Reads profile.yaml
