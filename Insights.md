@@ -111,3 +111,31 @@ Regular updates: Keep dependencies patched for security.
 # instead  We use the .pull() method on the user's links array // .pull() will search the array and remove the subdocument with the matching _id.
 
 
+# jest-extended → write fewer lines of assertion code.
+
+ "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --testTimeout=10000 --runInBand --coverage",
+  "jest": {
+    "testEnvironment": "node"
+  },
+
+  # npm test -- src/tests/links.test.js it hep to tell npm to run only link link file and not others Stop parsing arguments for yourself, and pass everything that comes after this directly to the command in the script. 
+
+  # create  .vscode folder in backened and then in .vscode=> settings.json(file)
+
+  {
+    "jest.commandLine": "npm test"
+}
+
+//tells the VS Code Jest extension: "Do not use your own internal command. For this project, whenever I click the 'Run' button, you must run the script named test from the package.json file."
+
+# Faster Transpilers: There are now newer, faster alternatives to Babel that are gaining huge popularity.
+SWC (Speedy Web Compiler): Written in the Rust programming language. It is significantly faster than Babel. It's used by default in modern frameworks like Next.js.
+esbuild: Written in the Go programming language. Also incredibly fast.
+So why did we use Babel?
+Because Babel is the most mature, most stable, and most widely supported transpiler. It is battle-tested over a decade. For learning the fundamental concept of how to solve this problem, Babel is the perfect tool.
+
+  // THIS IS THE MOST IMPORTANT LINE
+  // It tells Jest to use Babel for all .js files.
+  transform: {
+    '^.+\\.js$': 'babel-jest',
+  },

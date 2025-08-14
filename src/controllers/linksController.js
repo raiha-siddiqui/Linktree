@@ -5,7 +5,7 @@ import User from '../models/user.js'
 export const addLink=asyncHandler(async(req, res)=>{
       const errors= validationResult(req)
       if(!errors.isEmpty()){
-        return res.status(400).json({error: errors.array()[0].msg})
+        return res.status(400).json({errors: errors.array()})
       }
       const {title, url, isActive}= req.body
           const user= await User.findById(req.user.id)
@@ -24,7 +24,7 @@ export const getAllLinks=asyncHandler(async(req, res)=>{
 export const updateLink=asyncHandler(async(req, res)=>{
       const errors= validationResult(req)
       if(!errors.isEmpty()){
-        return res.status(400).json({error: errors.array()[0].msg})
+        return res.status(400).json({errors: errors.array()})
       }
         const {title, url, isActive}= req.body
         const {linkId}=req.params
@@ -32,7 +32,7 @@ export const updateLink=asyncHandler(async(req, res)=>{
             const user= await User.findById(req.user.id)
             const link= user.links.id(linkId)
             if(!link){
-                return res.status(400).json({message: 'Link not found'})
+                return res.status(404).json({message: 'Link not found'})
             }
             link.title= title
             link.url= url
@@ -47,6 +47,10 @@ export const updateLink=asyncHandler(async(req, res)=>{
 export const deleteLink=asyncHandler(async(req, res)=>{
         const {linkId}= req.params
         const user= await User.findById(req.user.id)
+        const link= user.links.id(linkId)
+        if(!link){
+          res.status(404).json({message: 'Link not found'})
+        }
         user.links.pull({_id: linkId})
         await user.save()
         return res.status(204).send()

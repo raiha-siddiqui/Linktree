@@ -6,7 +6,7 @@ const  linkRouter= express.Router()
 
 
 const linkValidator=[
-    body('title').notEmpty().withMessage('Title must be at least 4 characters').trim().escape(),
+    body('title').isLength({ min: 1 }).withMessage('Title is required').isLength({ max: 100 }).withMessage('Title cannot exceed 100 characters').trim().escape(),
     body('url').isURL({ protocols: ['http','https'], require_protocol: true }).withMessage('A valid URL is required')
 ]
 
